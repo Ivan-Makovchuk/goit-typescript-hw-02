@@ -1,0 +1,19 @@
+.header {
+  background-color: blue;
+  height: 50px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+}
+
+.form {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.formInput {
+  height: 30px;
+  width: 400px;
+}
