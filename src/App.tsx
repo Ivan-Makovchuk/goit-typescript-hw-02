@@ -20,15 +20,15 @@ export type Image = {
 };
 
 function App() {
-  const [query, setQuery] = useState<string>("");
+  const [query, setQuery] = useState("");
   const [data, setData] = useState<Image[]>([]);
   const [page, setPage] = useState(1);
-  const [isLoad, setIsLoad] = useState<boolean>(false);
-  const [isError, setIsError] = useState<boolean>(false);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [modalImgSrc, setModalImgSrc] = useState<string>("");
+  const [isLoad, setIsLoad] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalImgSrc, setModalImgSrc] = useState("");
   const [modalAlt, setModalAlt] = useState("");
-  const [isLastPage, setIsLastPage] = useState<boolean>(true);
+  const [isLastPage, setIsLastPage] = useState(true);
 
   const openModal = (imgSrc: string, altText: string): void => {
     setModalImgSrc(imgSrc);
