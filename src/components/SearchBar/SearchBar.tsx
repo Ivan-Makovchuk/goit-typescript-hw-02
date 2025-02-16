@@ -9,13 +9,13 @@ type Props = {
 };
 
 const SearchBar: React.FC<Props> = ({ search, resetData }) => {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState<string>("");
 
-  function handleChange(event: ChangeEvent<HTMLInputElement>) {
+  function handleChange(event: ChangeEvent<HTMLInputElement>): void {
     setValue(event.target.value);
   }
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  function handleSubmit(e: FormEvent<HTMLFormElement>): void {
     e.preventDefault();
 
     if (value.trim() === "") {
@@ -29,10 +29,10 @@ const SearchBar: React.FC<Props> = ({ search, resetData }) => {
       });
       return;
     }
+    
     search(value.trim());
     resetData([]);
     setValue("");
-    e.currentTarget.reset();
   }
 
   return (

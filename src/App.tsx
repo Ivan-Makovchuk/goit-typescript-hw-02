@@ -19,51 +19,47 @@ export type Image = {
 };
 
 function App() {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState<string>("");
   const [data, setData] = useState<Image[]>([]);
-  const [page, setPage] = useState(1);
-  const [isLoad, setIsLoad] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalImgSrc, setModalImgSrc] = useState("");
-  const [modalAlt, setModalAlt] = useState("");
-  const [isLastPage, setIsLastPage] = useState(true);
+  const [page, setPage] = useState<number>(1);
+  const [isLoad, setIsLoad] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
+  const [isLastPage, setIsLastPage] = useState<boolean>(true);
+
+  const [modal, setModal] = useState<{ isOpen: boolean; imgSrc: string; altText: string }>(
+    { isOpen: false, imgSrc: "", altText: "" }
+  );
 
   const openModal = (imgSrc: string, altText: string): void => {
-    setModalImgSrc(imgSrc);
-    setModalAlt(altText);
-    setIsModalOpen(true);
+    setModal({ isOpen: true, imgSrc, altText });
   };
 
   const closeModal = (): void => {
-    setIsModalOpen(false);
-    setModalImgSrc("");
-    setModalAlt("");
+    setModal({ isOpen: false, imgSrc: "", altText: "" });
   };
 
   useEffect(() => {
-    const fetchRequest = async () => {
-      if (!query.trim()) {
-        return;
-      }
+    const fetchRequest = async (): Promise<void> => {
+      if (!query.trim()) return;
+
       try {
         setIsLoad(true);
         setIsError(false);
         setIsLastPage(true);
 
         const response = await fetchImages(query, page);
+        setData((prev) => [...prev, ...response.results]);
 
         if (response.total_pages === page) {
           setIsLastPage(false);
         }
-
-        setData((prev) => [...prev, ...response.results]);
       } catch (e) {
         setIsError(true);
       } finally {
         setIsLoad(false);
       }
     };
+
     fetchRequest();
   }, [query, page]);
 
@@ -77,10 +73,10 @@ function App() {
         <LoadMoreBtn changePage={() => setPage((prev) => prev + 1)} />
       )}
       <ImageModal
-        isOpen={isModalOpen}
+        isOpen={modal.isOpen}
         onRequestClose={closeModal}
-        imgSrc={modalImgSrc}
-        altText={modalAlt}
+        imgSrc={modal.imgSrc}
+        altText={modal.altText}
       />
     </>
   );
